@@ -1,7 +1,20 @@
 /**
  * Created by liuzhe on 2016/2/28.
  */
-apiURL = 'http://localhost/api/rate'
+
+
+//apiURL = 'http://localhost/api/rate'
+baseUrl = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com';
+apiURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/rate';
+
+var req = {
+    method: 'get',
+    url: apiURL,
+    headers: {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' ,
+        'Origin': baseUrl
+    }
+};
 
 new Vue({
     el: '#app',
@@ -29,11 +42,13 @@ new Vue({
 
     methods: {
         getRate: function(){
-            this.$http.get(apiURL, function(rates){
+            //this.$http.get(apiURL, function(rates){
+            this.$http(req).then(function(rates){
                 this.$set("rates", rates);
 
                 cursArr = [];
                 jQuery.each(rates, function(index, rate){
+                    console.log(JSON.stringify(rate));
                     jQuery.each(rate.field_cur, function(index, cur){
                         if(jQuery.inArray(cur.value, cursArr) === -1){
                             cursArr.push(cur.value);
@@ -43,7 +58,8 @@ new Vue({
                 this.$set("curs", cursArr);
 
                 //console.log(rates);
+            //})
             })
         }
     }
-})
+});
