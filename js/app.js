@@ -8,8 +8,18 @@ baseUrl = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com';
 apiURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/rate';
 rateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/get-rate/';
 
-Vue.component('hello', {
+var about = Vue.extend({
+    template: '#about',
+    //template: '<a>Hello</a>'
 
+    data: function () {
+        return {
+            message: '我在学习Vue js!'
+        }
+    }
+})
+
+var hello = Vue.extend({
     template: '#hello',
     //template: '<a>Hello</a>'
 
@@ -18,8 +28,40 @@ Vue.component('hello', {
             message: '你好'
         }
     }
+})
+
+//通上面写法效果相同
+//Vue.component('hello', {
+//
+//    template: '#hello',
+//    //template: '<a>Hello</a>'
+//
+//    data: function () {
+//        return {
+//            message: '你好'
+//        }
+//    }
+//
+//});
+
+var APP = Vue.extend({});
+
+var router = new VueRouter();
+
+router.map({
+
+    '/hello':{
+        component: hello
+    },
+
+    '/about':{
+            component: about
+        }
 
 });
+
+router.start(APP, '#app');
+
 
 
 var req = {

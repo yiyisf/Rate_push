@@ -18,6 +18,10 @@
 <body>
 <div class="container" id="app">
     <!--<h1>{{ hello }}</h1>-->
+    <a v-link="{path: '/hello'}">hello</a>
+    <a v-link="{path: '/about'}">about</a>
+
+    <router-view></router-view>
     <!--<input v-model="hello">-->
     <!--<ul>-->
     <!--<li v-for="name in names">-->
@@ -29,7 +33,7 @@
     <!--<hr>-->
     <!--<br>-->
     <!--<br>-->
-    <div class="filter">
+    <div class="filter" v-show="rates">
         <input type="text" class="form-control" v-model="liveFilter">
         <h4>选择货币:</h4>
         <div class="row">
@@ -46,7 +50,7 @@
 
     <div class="publish" v-show="!rate">
         <table cellpadding="0" cellspacing="0" width="100%" align="left">
-            <tr>
+            <tr v-show="rates">
                 <th>货币名称</th>
                 <th>现汇买入价</th>
                 <th>现钞买入价</th>
@@ -81,13 +85,19 @@
     </div>
 
 
-    <hello></hello>
+    <!--<hello></hello>-->
 </div>
 
 <!--template可于app外被Vue js中的template调用-->
 <template id="hello">
 
     <button class="btn-block btn-info">hello</button>
+    <h4>{{ message }}</h4>
+</template>
+
+<template id="about">
+
+    <button class="btn-block btn-info">about</button>
     <h4>{{ message }}</h4>
 </template>
 <!--<div id="hello">-->
@@ -99,6 +109,7 @@
 <script type="text/javascript" src="js/vue.js"></script>
 <script type="text/javascript" src="js/vue-resource.js"></script>
 <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+<script type="text/javascript" src="js/vue-router.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 
 </body>
