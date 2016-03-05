@@ -10,25 +10,101 @@ rateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/get-rate/';
 
 var about = Vue.extend({
     template: '#about',
-    //template: '<a>Hello</a>'
 
     data: function () {
         return {
             message: '我在学习Vue js!'
         }
     }
-})
+});
 
 var hello = Vue.extend({
     template: '#hello',
-    //template: '<a>Hello</a>'
 
     data: function () {
         return {
             message: '你好'
         }
     }
-})
+});
+
+var rate_list = Vue.extend({
+    template: '#rate-list-template',
+
+    data: function () {
+        return {
+            curs: '',
+            rates: '',
+            liveFiter: '',
+            curfilter: ''
+            //rate: ''
+        }
+    },
+
+    ready: function () {
+        this.getRate();
+    },
+
+    methods: {
+        getRate: function () {
+
+            this.$set("rate", '');
+
+            this.$http.get(apiURL, function (rates) {
+                //this.$http(req).then(function(rates){
+                this.$set("rates", rates);
+
+                cursArr = [];
+                jQuery.each(rates, function (index, rate) {
+                    console.log(JSON.stringify(rate));
+                    jQuery.each(rate.field_cur, function (index, cur) {
+                        if (jQuery.inArray(cur.value, cursArr) === -1) {
+                            cursArr.push(cur.value);
+                        }
+                    });
+                });
+                this.$set("curs", cursArr);
+
+                //console.log(rates);
+            })
+            //})
+        }
+
+    }
+});
+
+var single_rate = Vue.extend({
+    template: '#single-rate-template',
+
+    data: function(){
+        return {
+            rate: ''
+        }
+    },
+
+    ready: function(){
+        this.getSigalRate();
+    },
+
+
+    methods: {
+        getSigalRate: function () {
+            this.$http.get(rateURL + this.$route.params.cur, function (rate) {
+
+                this.$set("rate", rate);
+                console.log(rate);
+
+            })
+        }
+    }
+
+    //
+    //data: function () {
+    //    return {
+    //        message: '你好'
+    //    }
+    //}
+});
 
 //通上面写法效果相同
 //Vue.component('hello', {
@@ -50,18 +126,28 @@ var router = new VueRouter();
 
 router.map({
 
-    '/hello':{
+    '/hello': {
         component: hello
     },
 
-    '/about':{
-            component: about
-        }
+    '/about': {
+        component: about
+    },
+
+
+    'rate/:cur': {
+        name: 'rate',
+        component: single_rate,
+    },
+
+
+    '/': {
+        component: rate_list
+    }
 
 });
 
 router.start(APP, '#app');
-
 
 
 var req = {
@@ -73,7 +159,7 @@ var req = {
     }
 };
 
-new Vue({
+/*new Vue({
     el: '#app',
 
     data: {
@@ -86,7 +172,6 @@ new Vue({
         ],
 
         curs: '',
-
         rates: '',
         liveFiter: '',
         curfilter: '',
@@ -134,4 +219,4 @@ new Vue({
         }
     }
 });
-
+*/

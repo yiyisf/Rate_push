@@ -21,6 +21,12 @@
     <a v-link="{path: '/hello'}">hello</a>
     <a v-link="{path: '/about'}">about</a>
 
+    <hr>
+
+    <!--<rate_list></rate_list>-->
+
+
+
     <router-view></router-view>
     <!--<input v-model="hello">-->
     <!--<ul>-->
@@ -34,56 +40,12 @@
     <!--<hr>-->
     <!--<br>-->
     <!--<br>-->
-    <div class="filter" v-show="rates">
-        <input type="text" class="form-control" v-model="liveFilter">
-        <h4>选择货币:</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <select class="form-control" v-model="curFilter">
-                    <option value="">All</option>
-                    <option v-for="cur in curs">{{ cur }}</option>
-                </select>
 
-            </div>
-        </div>
-    </div>
-
-
-    <div class="publish" v-show="!rate">
-        <table cellpadding="0" cellspacing="0" width="100%" align="left">
-            <tr v-show="rates">
-                <th>货币名称</th>
-                <th>现汇买入价</th>
-                <th>现钞买入价</th>
-                <th>现汇卖出价</th>
-                <th>现钞卖出价</th>
-                <th>外管局中间价</th>
-            </tr>
-            <tr class="rate_list" v-for="rate in rates | filterBy liveFilter | filterBy curFilter">
-                <td>
-                    <a @click="getSigalRate(rate.field_cur[0].value)">{{ rate.field_cur[0].value }}</a>
-                    <img v-bind:src="rate.field_cur_icon[0].url" alt="{{ rate.field_cur_icon[0].alt }}" hight="20px">
-                </td>
-                <td>{{ rate.field_buy_rate[0].value }}</td>
-                <td>{{ rate.field_sell_rate[0].value }}</td>
-                <td>{{ rate.field_notes_buy_rate[0].value }}</td>
-                <td>{{ rate.field_notes_sell_rate[0].value }}</td>
-                <td>{{ rate.field_mid_rate[0].value }}</td>
-            </tr>
-        </table>
-    </div>
 
     <hr>
     <hr>
 
-    <div v-show="rate" @click="getRate" v-for="rateItem in rate">
-        <a class="btn btn-danger">返回</a>
-        <h2>{{ rateItem.field_cur[0].value }}</h2>
-        <h4>买入价:{{ rateItem.field_buy_rate[0].value }}</h4>
-        <h4>卖出价:{{ rateItem.field_sell_rate[0].value }}</h4>
-        <h4>中间价:{{ rateItem.field_mid_rate[0].value }}</h4>
-        <h4>更新时间:{{ rateItem.created[0].value }}</h4>
-    </div>
+
 
 
     <!--<hello></hello>-->
@@ -100,6 +62,61 @@
 
     <button class="btn-block btn-info">about</button>
     <h4>{{ message }}</h4>
+</template>
+
+<!--汇率查询显示模版-->
+<template id="rate-list-template">
+    <div class="filter" v-show="rates" align="center">
+        <input type="text" class="form-control" v-model="liveFilter">
+        <h4>选择货币:</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <select class="form-control" v-model="curFilter">
+                    <option value="">All</option>
+                    <option v-for="cur in curs">{{ cur }}</option>
+                </select>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="publish" v-show="!rate">
+        <table cellpadding="0" cellspacing="0" width="80%" align="left">
+            <tr v-show="rates">
+                <th>货币名称</th>
+                <th>现汇买入价</th>
+                <th>现钞买入价</th>
+                <th>现汇卖出价</th>
+                <th>现钞卖出价</th>
+                <th>外管局中间价</th>
+            </tr>
+            <tr class="rate_list" v-for="rate in rates | filterBy liveFilter | filterBy curFilter">
+                <td>
+                    <!--<a @click="getSigalRate(rate.field_cur[0].value)">{{ rate.field_cur[0].value }}</a>-->
+                    <a v-link="{ name: 'rate', params: {cur: rate.field_cur[0].value}}">{{ rate.field_cur[0].value }}</a>
+                    <img v-bind:src="rate.field_cur_icon[0].url" alt="{{ rate.field_cur_icon[0].alt }}" hight="20px">
+                </td>
+                <td>{{ rate.field_buy_rate[0].value }}</td>
+                <td>{{ rate.field_sell_rate[0].value }}</td>
+                <td>{{ rate.field_notes_buy_rate[0].value }}</td>
+                <td>{{ rate.field_notes_sell_rate[0].value }}</td>
+                <td>{{ rate.field_mid_rate[0].value }}</td>
+            </tr>
+        </table>
+    </div>
+</template>
+
+<!--单个汇率查询模版-->
+<template id="single-rate-template">
+    <div v-show="rate"  v-for="rateItem in rate">
+        <a class="btn btn-danger" v-link="{ path: '/'}">返回</a>
+        <h2>{{ rateItem.field_cur[0].value }}</h2>
+        <h4>买入价:{{ rateItem.field_buy_rate[0].value }}</h4>
+        <h4>卖出价:{{ rateItem.field_sell_rate[0].value }}</h4>
+        <h4>中间价:{{ rateItem.field_mid_rate[0].value }}</h4>
+        <time>更新时间:{{ rateItem.created[0].value }}</time>
+    </div>
 </template>
 <!--<div id="hello">-->
 
