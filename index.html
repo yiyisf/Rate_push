@@ -56,7 +56,7 @@
             </tr>
             <tr class="rate_list" v-for="rate in rates | filterBy liveFilter | filterBy curFilter">
                 <td>
-                    <a v-on:click="getSigalRate(rate.field_cur[0].value)">{{ rate.field_cur[0].value }}</a>
+                    <a @click="getSigalRate(rate.field_cur[0].value)">{{ rate.field_cur[0].value }}</a>
                     <img v-bind:src="rate.field_cur_icon[0].url" alt="{{ rate.field_cur_icon[0].alt }}" hight="20px">
                 </td>
                 <td>{{ rate.field_buy_rate[0].value }}</td>
@@ -71,7 +71,7 @@
     <hr>
     <hr>
 
-    <div v-show="rate" v-on:click="getRate" v-for="rateItem in rate">
+    <div v-show="rate" @click="getRate" v-for="rateItem in rate">
         <a class="btn btn-danger">返回</a>
         <h2>{{ rateItem.field_cur[0].value }}</h2>
         <h4>买入价:{{ rateItem.field_buy_rate[0].value }}</h4>
@@ -80,7 +80,20 @@
         <h4>更新时间:{{ rateItem.created[0].value }}</h4>
     </div>
 
+
+    <hello></hello>
 </div>
+
+<!--template可于app外被Vue js中的template调用-->
+<template id="hello">
+
+    <button class="btn-block btn-info">hello</button>
+    <h4>{{ message }}</h4>
+</template>
+<!--<div id="hello">-->
+
+
+<!--</div>-->
 
 
 <script type="text/javascript" src="js/vue.js"></script>

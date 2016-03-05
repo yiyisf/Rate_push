@@ -8,11 +8,25 @@ baseUrl = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com';
 apiURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/rate';
 rateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/get-rate/';
 
+Vue.component('hello', {
+
+    template: '#hello',
+    //template: '<a>Hello</a>'
+
+    data: function () {
+        return {
+            message: '你好'
+        }
+    }
+
+});
+
+
 var req = {
     method: 'get',
     url: apiURL,
     headers: {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' ,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Origin': baseUrl
     }
 };
@@ -37,25 +51,25 @@ new Vue({
         rate: ''
     },
 
-    ready: function(){
+    ready: function () {
         this.getRate();
         //console.log(this);
     },
 
     methods: {
-        getRate: function(){
+        getRate: function () {
 
             this.$set("rate", '');
 
-            this.$http.get(apiURL, function(rates){
-            //this.$http(req).then(function(rates){
+            this.$http.get(apiURL, function (rates) {
+                //this.$http(req).then(function(rates){
                 this.$set("rates", rates);
 
                 cursArr = [];
-                jQuery.each(rates, function(index, rate){
+                jQuery.each(rates, function (index, rate) {
                     console.log(JSON.stringify(rate));
-                    jQuery.each(rate.field_cur, function(index, cur){
-                        if(jQuery.inArray(cur.value, cursArr) === -1){
+                    jQuery.each(rate.field_cur, function (index, cur) {
+                        if (jQuery.inArray(cur.value, cursArr) === -1) {
                             cursArr.push(cur.value);
                         }
                     });
@@ -68,9 +82,9 @@ new Vue({
         },
 
 
-        getSigalRate: function(cur) {
-            this.$http.get(rateURL + cur , function(rate){
-            //this.$http(req).then(function(rates){
+        getSigalRate: function (cur) {
+            this.$http.get(rateURL + cur, function (rate) {
+                //this.$http(req).then(function(rates){
                 this.$set("rate", rate);
                 console.log(rate);
 
