@@ -7,6 +7,8 @@
 baseUrl = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com';
 apiURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/rate';
 rateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/get-rate/';
+//addRateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/entity/node';
+addRateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/node/add/rate';
 
 var about = Vue.extend({
     template: '#about',
@@ -97,13 +99,62 @@ var single_rate = Vue.extend({
             })
         }
     }
+});
 
-    //
-    //data: function () {
-    //    return {
-    //        message: '你好'
-    //    }
-    //}
+var add_rate = Vue.extend({
+    template: '#add-rate-template',
+
+    data: function(){
+        return {
+
+        }
+    },
+
+    http: {
+        headers: {
+            'Accept': 'json',
+            'Content-Type': 'application/hal+json',
+            'Authorization': 'Basic eWl5aTpwYXNzd29yZA=='
+
+
+        }
+
+    },
+
+    ready: function() {
+        this.addRate();
+    },
+
+
+    methods: {
+        addRate: function () {
+
+            var data = {
+                //
+                //'_links':{
+                //    'type':{
+                //        'href': 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/rest/type/node/rate'
+                //    }
+                //},
+
+                'title': [
+                    {
+                    'value': '日元'
+                    }
+                ],
+
+                'body': [
+                    {
+                    'value': '新增body'
+                    }
+                ]
+
+            };
+
+            this.$http.post(addRateURL, data);
+            //this.$http.post(addRateURL, data);
+        }
+    }
 });
 
 //通上面写法效果相同
@@ -135,6 +186,11 @@ router.map({
     },
 
 
+    '/add': {
+        component: add_rate
+        },
+
+
     'rate/:cur': {
         name: 'rate',
         component: single_rate,
@@ -150,14 +206,14 @@ router.map({
 router.start(APP, '#app');
 
 
-var req = {
-    method: 'get',
-    url: apiURL,
-    headers: {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Origin': baseUrl
-    }
-};
+//var req = {
+//    method: 'get',
+//    url: apiURL,
+//    headers: {
+//        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+//        'Origin': baseUrl
+//    }
+//};
 
 /*new Vue({
     el: '#app',
