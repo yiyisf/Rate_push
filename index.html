@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Rates App</title>
@@ -44,7 +44,7 @@
     </div>
 
 
-    <div class="publish">
+    <div class="publish" v-show="!rate">
         <table cellpadding="0" cellspacing="0" width="100%" align="left">
             <tr>
                 <th>货币名称</th>
@@ -56,7 +56,7 @@
             </tr>
             <tr class="rate_list" v-for="rate in rates | filterBy liveFilter | filterBy curFilter">
                 <td>
-                    {{ rate.field_cur[0].value }}
+                    <a v-on:click="getSigalRate(rate.field_cur[0].value)">{{ rate.field_cur[0].value }}</a>
                     <img v-bind:src="rate.field_cur_icon[0].url" alt="{{ rate.field_cur_icon[0].alt }}" hight="20px">
                 </td>
                 <td>{{ rate.field_buy_rate[0].value }}</td>
@@ -66,6 +66,18 @@
                 <td>{{ rate.field_mid_rate[0].value }}</td>
             </tr>
         </table>
+    </div>
+
+    <hr>
+    <hr>
+
+    <div v-show="rate" v-on:click="getRate" v-for="rateItem in rate">
+        <a class="btn btn-danger">返回</a>
+        <h2>{{ rateItem.field_cur[0].value }}</h2>
+        <h4>买入价:{{ rateItem.field_buy_rate[0].value }}</h4>
+        <h4>卖出价:{{ rateItem.field_sell_rate[0].value }}</h4>
+        <h4>中间价:{{ rateItem.field_mid_rate[0].value }}</h4>
+        <h4>更新时间:{{ rateItem.created[0].value }}</h4>
     </div>
 
 </div>

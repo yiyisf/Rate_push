@@ -6,6 +6,7 @@
 //apiURL = 'http://localhost/api/rate'
 baseUrl = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com';
 apiURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/rate';
+rateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/get-rate/';
 
 var req = {
     method: 'get',
@@ -32,7 +33,8 @@ new Vue({
 
         rates: '',
         liveFiter: '',
-        curfilter: ''
+        curfilter: '',
+        rate: ''
     },
 
     ready: function(){
@@ -42,8 +44,11 @@ new Vue({
 
     methods: {
         getRate: function(){
-            //this.$http.get(apiURL, function(rates){
-            this.$http(req).then(function(rates){
+
+            this.$set("rate", '');
+
+            this.$http.get(apiURL, function(rates){
+            //this.$http(req).then(function(rates){
                 this.$set("rates", rates);
 
                 cursArr = [];
@@ -58,8 +63,19 @@ new Vue({
                 this.$set("curs", cursArr);
 
                 //console.log(rates);
+            })
             //})
+        },
+
+
+        getSigalRate: function(cur) {
+            this.$http.get(rateURL + cur , function(rate){
+            //this.$http(req).then(function(rates){
+                this.$set("rate", rate);
+                console.log(rate);
+
             })
         }
     }
 });
+
