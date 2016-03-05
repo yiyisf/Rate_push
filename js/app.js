@@ -8,7 +8,7 @@ baseUrl = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com';
 apiURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/rate';
 rateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/api/get-rate/';
 //addRateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/entity/node';
-addRateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/node/add/rate';
+addRateURL = 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/entity/node';
 
 var about = Vue.extend({
     template: '#about',
@@ -78,13 +78,13 @@ var rate_list = Vue.extend({
 var single_rate = Vue.extend({
     template: '#single-rate-template',
 
-    data: function(){
+    data: function () {
         return {
             rate: ''
         }
     },
 
-    ready: function(){
+    ready: function () {
         this.getSigalRate();
     },
 
@@ -104,24 +104,20 @@ var single_rate = Vue.extend({
 var add_rate = Vue.extend({
     template: '#add-rate-template',
 
-    data: function(){
-        return {
-
-        }
+    data: function () {
+        return {}
     },
 
     http: {
         headers: {
-            'Accept': 'json',
-            'Content-Type': 'application/hal+json',
+            //'Accept': 'json',
+            'Content-Type': 'multipart/form-data',
             'Authorization': 'Basic eWl5aTpwYXNzd29yZA=='
-
-
         }
 
     },
 
-    ready: function() {
+    ready: function () {
         this.addRate();
     },
 
@@ -129,29 +125,25 @@ var add_rate = Vue.extend({
     methods: {
         addRate: function () {
 
-            var data = {
-                //
-                //'_links':{
-                //    'type':{
-                //        'href': 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/rest/type/node/rate'
-                //    }
-                //},
-
+            var datain = {
+                '_links': {
+                    'type': {
+                        'href': 'http://yiyii7dckrig4v.devcloud.acquia-sites.com/rest/type/node/rate'
+                    }
+                },
                 'title': [
                     {
-                    'value': '日元'
+                        'value': '货币3'
                     }
                 ],
-
                 'body': [
                     {
-                    'value': '新增body'
+                        'value': '添加货币'
                     }
                 ]
-
             };
 
-            this.$http.post(addRateURL, data);
+            this.$http.post(addRateURL, datain);
             //this.$http.post(addRateURL, data);
         }
     }
@@ -188,7 +180,7 @@ router.map({
 
     '/add': {
         component: add_rate
-        },
+    },
 
 
     'rate/:cur': {
@@ -216,63 +208,63 @@ router.start(APP, '#app');
 //};
 
 /*new Vue({
-    el: '#app',
+ el: '#app',
 
-    data: {
-        hello: 'Hello world again!',
-        names: [
-            {firstname: '张', lastname: '三'},
-            {firstname: '李', lastname: '四'},
-            {firstname: '王', lastname: '五'},
-            {firstname: '刘', lastname: '哲'}
-        ],
+ data: {
+ hello: 'Hello world again!',
+ names: [
+ {firstname: '张', lastname: '三'},
+ {firstname: '李', lastname: '四'},
+ {firstname: '王', lastname: '五'},
+ {firstname: '刘', lastname: '哲'}
+ ],
 
-        curs: '',
-        rates: '',
-        liveFiter: '',
-        curfilter: '',
-        rate: ''
-    },
+ curs: '',
+ rates: '',
+ liveFiter: '',
+ curfilter: '',
+ rate: ''
+ },
 
-    ready: function () {
-        this.getRate();
-        //console.log(this);
-    },
+ ready: function () {
+ this.getRate();
+ //console.log(this);
+ },
 
-    methods: {
-        getRate: function () {
+ methods: {
+ getRate: function () {
 
-            this.$set("rate", '');
+ this.$set("rate", '');
 
-            this.$http.get(apiURL, function (rates) {
-                //this.$http(req).then(function(rates){
-                this.$set("rates", rates);
+ this.$http.get(apiURL, function (rates) {
+ //this.$http(req).then(function(rates){
+ this.$set("rates", rates);
 
-                cursArr = [];
-                jQuery.each(rates, function (index, rate) {
-                    console.log(JSON.stringify(rate));
-                    jQuery.each(rate.field_cur, function (index, cur) {
-                        if (jQuery.inArray(cur.value, cursArr) === -1) {
-                            cursArr.push(cur.value);
-                        }
-                    });
-                });
-                this.$set("curs", cursArr);
+ cursArr = [];
+ jQuery.each(rates, function (index, rate) {
+ console.log(JSON.stringify(rate));
+ jQuery.each(rate.field_cur, function (index, cur) {
+ if (jQuery.inArray(cur.value, cursArr) === -1) {
+ cursArr.push(cur.value);
+ }
+ });
+ });
+ this.$set("curs", cursArr);
 
-                //console.log(rates);
-            })
-            //})
-        },
+ //console.log(rates);
+ })
+ //})
+ },
 
 
-        getSigalRate: function (cur) {
-            this.$http.get(rateURL + cur, function (rate) {
-                //this.$http(req).then(function(rates){
-                this.$set("rate", rate);
-                console.log(rate);
+ getSigalRate: function (cur) {
+ this.$http.get(rateURL + cur, function (rate) {
+ //this.$http(req).then(function(rates){
+ this.$set("rate", rate);
+ console.log(rate);
 
-            })
-        }
-    }
-});
-*/
+ })
+ }
+ }
+ });
+ */
