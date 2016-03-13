@@ -19,7 +19,7 @@ gulp.task('watch', function(){
     livereload.listen();
 
     gulp.watch('./sass/**/*.scss', ['sass']);
-    gulp.watch(['./css/style.css', './js/*.js', '*.html'], function (files){
+    gulp.watch(['./css/style.css', './js/*.js', '/template/*.html', '*.html'], function (files){
         livereload.changed(files)
     });
 });
