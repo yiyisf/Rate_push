@@ -1,0 +1,33 @@
+{
+  "short_name": "YIYI App",
+  "name": "YIYI's Application ++",
+  "gcm_sender_id": "130196473853",
+  "icons": [
+    {
+      "src": "launcher-icon-2x.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "launcher-icon-3x.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "launcher-icon-4x.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+
+//  For Utility Apps
+//  "display": "standalone",
+//  "orientation": "landscape",
+
+//  for GAME
+  "display": "fullscreen",
+"orientation": "landscape"
+
+}
+
