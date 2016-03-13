@@ -134,6 +134,29 @@ td img {
   clear: both;
 }
 
+.curl-code-example {
+  display: block;
+
+
+  width: 100%;
+
+  word-break: break-all;
+
+  padding: 16px;
+  box-sizing: border-box;
+
+  background-color: #eeeeee;
+  color: #222222;
+}
+
+main {
+  max-width: 480px;
+  min-width: 64px;
+  width: 100%;
+  padding: 32px;
+  margin: auto;
+}
+
 
 
 

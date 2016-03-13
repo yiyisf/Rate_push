@@ -105,20 +105,22 @@ var add_rate = Vue.extend({
     template: '#add-rate-template',
 
     data: function () {
-        return {}
+        return {
+            addcur: '',
+            body: ''
+        }
     },
 
-    http: {
-        headers: {
-            //'Accept': 'json',
-            'Content-Type': 'multipart/form-data',
-            'Authorization': 'Basic eWl5aTpwYXNzd29yZA=='
+    http:{
+        headers:{
+            'Accept' : 'json',
+            'Content-Type' : 'application/hal+json',
+            'Authorization' : 'Basic eWl5aTpwYXNzd29yZA=='
         }
-
     },
 
     ready: function () {
-        this.addRate();
+        //this.addRate();
     },
 
 
@@ -133,17 +135,24 @@ var add_rate = Vue.extend({
                 },
                 'title': [
                     {
-                        'value': '货币3'
+                        'value': this.addcur
                     }
                 ],
                 'body': [
                     {
-                        'value': '添加货币'
+                        'value': this.body
                     }
                 ]
             };
 
-            this.$http.post(addRateURL, datain);
+            //this.$http.setRequestHeader(this.http);
+
+            //$.post();
+
+            this.$http.post('http://yiyii7dckrig4v.devcloud.acquia-sites.com/entity/node', datain);
+
+            this.$set('addcur', '');
+            this.$set('body', '');
             //this.$http.post(addRateURL, data);
         }
     }
